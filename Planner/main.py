@@ -1,8 +1,7 @@
-# import myGUI as mg
-from myGUI import MyGUI
+from homePage import HomePage
 
 def main():
-    MyGUI()
+    HomePage()
 
 if __name__ == '__main__':
     main()
