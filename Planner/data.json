@@ -1,0 +1,7 @@
+{
+    "todo": [
+        { "id":0, "done":false, "text":"Finish left frame" },
+        { "id":1, "done":false, "text":"Finish middle frame" },
+        { "id":2, "done":false, "text":"Finish right frame" }
+    ]
+}
