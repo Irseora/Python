@@ -1,7 +1,16 @@
 {
-    "todo": [
-        { "id":0, "done":false, "text":"Finish left frame" },
-        { "id":1, "done":false, "text":"Finish middle frame" },
-        { "id":2, "done":false, "text":"Finish right frame" }
+    "tasks": [
+        { "done":0, "text":"Finish left frame" },
+        { "done":0, "text":"Finish middle frame" },
+        { "done":0, "text":"Finish right frame" }
+    ],
+
+    "events": [
+        { "date":"08-01-2025", "startTime":8, "endTime":9, "text":"AAAAAAA" }
+    ],
+
+    "deadlines": [
+        { "date":"05-02-2025", "text":"AAAAAA" },
+        { "date":"06-02-2025", "text":"BBBBBB" }
     ]
 }
