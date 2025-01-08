@@ -1,16 +1,92 @@
 {
     "tasks": [
-        { "done":0, "text":"Finish left frame" },
-        { "done":0, "text":"Finish middle frame" },
-        { "done":0, "text":"Finish right frame" }
+        {
+            "done": 1,
+            "text": "Finish todo section"
+        },
+        {
+            "done": 1,
+            "text": "Finish timeblock section"
+        },
+        {
+            "done": 1,
+            "text": "Finish deadlines section"
+        },
+        {
+            "done": 0,
+            "text": "DPPD lesson PPT"
+        },
+        {
+            "done": 0,
+            "text": "DPPD lesson DOC"
+        },
+        {
+            "done": 0,
+            "text": "Red & Com PDF"
+        }
     ],
-
     "events": [
-        { "date":"08-01-2025", "startTime":8, "endTime":9, "text":"AAAAAAA" }
+        {
+            "date": "08-01-2025",
+            "startTime": 8,
+            "endTime": 10,
+            "text": "Python"
+        },
+        {
+            "date": "08-01-2025",
+            "startTime": 12,
+            "endTime": 14,
+            "text": "Calcul Numeric"
+        },
+        {
+            "date": "08-01-2025",
+            "startTime": 14,
+            "endTime": 18,
+            "text": "Analiza Functionala"
+        },
+        {
+            "date": "09-01-2025",
+            "startTime": 8,
+            "endTime": 10,
+            "text": "AI"
+        },
+        {
+            "date": "09-01-2025",
+            "startTime": 13,
+            "endTime": 14,
+            "text": "DPPD"
+        },
+        {
+            "date": "09-01-2025",
+            "startTime": 15,
+            "endTime": 19,
+            "text": "Statistica Matematica"
+        },
+        {
+            "date": "09-01-2025",
+            "startTime": 19,
+            "endTime": 21,
+            "text": "Redactare & Comunicare"
+        },
+        {
+            "date": "10-01-2025",
+            "startTime": 12,
+            "endTime": 14,
+            "text": "DPPD"
+        }
     ],
-
     "deadlines": [
-        { "date":"05-02-2025", "text":"AAAAAA" },
-        { "date":"06-02-2025", "text":"BBBBBB" }
+        {
+            "date": "08-01-2025",
+            "text": "MIP - Planner Python"
+        },
+        {
+            "date": "10-01-2025",
+            "text": "DPPD - Digital Lesson"
+        },
+        {
+            "date": "16-01-2025",
+            "text": "Red & Com - Article"
+        }
     ]
 }

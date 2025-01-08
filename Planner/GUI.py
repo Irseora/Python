@@ -9,7 +9,7 @@ class MainWindow:
     def __init__(self):
         self.root = Tk()
         self.root.state('zoomed')
-        #self.root.geometry('1200x800')
+        self.root.title('Planner')
 
         # Fonts
         self.titlesFont = tkfont.Font(family = 'Vibur', size = 24)
@@ -28,6 +28,7 @@ class MainWindow:
         self.InitMiddle()
         self.InitRight()
 
+        self.root.protocol("WM_DELETE_WINDOW", self.SaveAndClose)
         self.root.mainloop()
 
     def LoadData(self):
@@ -55,6 +56,7 @@ class MainWindow:
         self.todoListFrame = Frame(self.leftFrame, bg = self.color2)
 
         self.taskNr = 0
+        self.taskDoneVars = []
         for task in self.tasks:
             self.CreateTask(task, self.taskNr)
             self.taskNr += 1
@@ -64,13 +66,13 @@ class MainWindow:
     def InitNewTaskFrame(self):
         self.newTaskFrame = Frame(self.leftFrame, bg = self.color2)
 
-        Label(self.newTaskFrame, text = "New Task:", font = self.smallerTitlesFont, bg = self.color2).grid(row = 0, column = 0, sticky = 'w', padx = 10)
+        Label(self.newTaskFrame, text = 'New Task:', font = self.smallerTitlesFont, bg = self.color2).grid(row = 0, column = 0, sticky = 'w', padx = 10)
         
-        self.newTaskText = ""
+        self.newTaskText = ''
         self.newTaskEntry = Entry(self.newTaskFrame, width = 23, bg = self.color1, font = self.normalFont)
-        self.newTaskEntry.grid(row = 1, column = 0, pady = 10, padx = 10, sticky = "sw")
+        self.newTaskEntry.grid(row = 1, column = 0, pady = 10, padx = 10, sticky = 'sw')
 
-        Button(self.newTaskFrame, text = "+", command = self.AddTask, bg = self.color1).grid(row = 1, column = 1, sticky = "e", padx = 5)
+        Button(self.newTaskFrame, text = '+', command = self.AddTask, bg = self.color1).grid(row = 1, column = 1, sticky = 'e', padx = 5)
 
         self.newTaskFrame.grid(row = 3, column = 0, sticky = 'nsew', padx = 10)
 
@@ -147,32 +149,59 @@ class MainWindow:
         self.deadlinesFrame.grid(row = 1, column = 0, sticky = 'nsew', padx = 10)
 
 
-    # --------------------------------------------------
+
+    def SaveAndClose(self):
+        # Update task variables
+        for i in range(0, len(self.taskDoneVars)):
+            self.tasks[i].done = self.taskDoneVars[i].get()
+
+        # Build dictionary
+        data = {
+            'tasks': [task.toDict() for task in self.tasks],
+            'events': [event.toDict() for event in self.events],
+            'deadlines': [deadline.toDict() for deadline in self.deadlines]
+        }
+
+        sl.Save(data, 'data.json')
+        self.root.destroy()       
+
 
 
     def AddTask(self):
         text = self.newTaskEntry.get()
 
         if (len(text) != 0):
-            self.taskNr += 1
             task = Task(0, text)
             self.tasks.append(task)
             self.CreateTask(task, self.taskNr)
 
+            self.taskNr += 1
             self.newTaskEntry.delete(0, 'end')
 
     def AddEvent(self):
         addEventWindow = Toplevel(self.root)
-        addEventWindow.geometry('500x200')
+        addEventWindow.geometry('350x200')
         addEventWindow.configure(bg = self.color1)
 
-        Label(addEventWindow, text = 'Date (dd-mm-yyyy):', font = self.normalFont, bg = self.color1).grid(row = 0, column = 0, sticky = 'w')
-        Label(addEventWindow, text = 'Start Time:', font = self.normalFont, bg = self.color1).grid(row = 1, column = 0, sticky = 'w')
-        Label(addEventWindow, text = 'End Time:', font = self.normalFont, bg = self.color1).grid(row = 2, column = 0, sticky = 'w')
+        entryFrame = Frame(addEventWindow, bg = self.color1)
 
-        
+        Label(entryFrame, text = 'Date (dd-mm-yyyy):', font = self.normalFont, bg = self.color1).grid(row = 0, column = 0, sticky = 'w')
+        self.dateEntry = Entry(entryFrame, width = 20, bg = self.color2, font = self.normalFont)
+        self.dateEntry.grid(row = 0, column = 1, sticky = 'ew')
 
-        
+        Label(entryFrame, text = 'Start Time (6-22):', font = self.normalFont, bg = self.color1).grid(row = 1, column = 0, sticky = 'w')
+        self.startEntry = Entry(entryFrame, width = 20, bg = self.color2, font = self.normalFont)
+        self.startEntry.grid(row = 1, column = 1, sticky = 'ew')
+
+        Label(entryFrame, text = 'End Time (6-22):', font = self.normalFont, bg = self.color1).grid(row = 2, column = 0, sticky = 'w')
+        self.endEntry = Entry(entryFrame, width = 20, bg = self.color2, font = self.normalFont)
+        self.endEntry.grid(row = 2, column = 1, sticky = 'ew')
+
+        Label(entryFrame, text = 'Title:', font = self.normalFont, bg = self.color1).grid(row = 3, column = 0, sticky = 'w')
+        self.titleEntry = Entry(entryFrame, width = 20, bg = self.color2, font = self.normalFont)
+        self.titleEntry.grid(row = 3, column = 1, sticky = 'ew')
+
+        entryFrame.grid(row = 0, column = 0, sticky = 'nsew')
 
     def AddDeadline(self):
         print('B')
@@ -180,7 +209,9 @@ class MainWindow:
 
 
     def CreateTask(self, task, rowNr):
-        checkButton = Checkbutton(self.todoListFrame, text = task.text, variable = task.done, onvalue = 1, offvalue = 0, bg = self.color2, font = self.normalFont)
+        self.taskDoneVars.append(IntVar())
+
+        checkButton = Checkbutton(self.todoListFrame, text = task.text, variable = self.taskDoneVars[rowNr], onvalue = 1, offvalue = 0, bg = self.color2, font = self.normalFont)
         if task.done: checkButton.select()
 
         checkButton.grid(row = rowNr, column = 0, sticky = 'w')
@@ -191,8 +222,8 @@ class MainWindow:
 
         Label(block, text = event.text, font = self.normalFont, bg = self.color2, wraplength = 100, justify = LEFT).grid(row = 0, column = 0, sticky = 'ew')
 
-        block.grid(row = event.startTime - 4, column = (event.day + 1) * 2, rowspan = event.endTime - event.startTime + 1, sticky = 'nesw')
+        block.grid(row = event.startTime - 4, column = (event.day + 1) * 2, rowspan = event.endTime - event.startTime, sticky = 'nesw')
 
     def CreateDeadline(self, deadline, rowNr):
         labelText = deadline.dateString + '\n' + deadline.text + '\n'
-        Label(self.deadlinesFrame, text = labelText, font = self.normalFont, bg = self.color2, wraplength = 100, justify = LEFT).grid(row = rowNr, column = 0, sticky = 'ew')
+        Label(self.deadlinesFrame, text = labelText, font = self.normalFont, bg = self.color2, wraplength = 400, justify = LEFT).grid(row = rowNr, column = 0, sticky = 'w')

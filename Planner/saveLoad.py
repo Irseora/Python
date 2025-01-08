@@ -44,3 +44,7 @@ def LoadDeadlines(data):
             deadlines.append(temp)
         
     return deadlines
+
+def Save(data, path):
+    with open(path, 'w') as file:
+        json.dump(data, file, indent = 4)

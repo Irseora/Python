@@ -1,4 +1,3 @@
-from homePage import HomePage
 from GUI import MainWindow
 
 def main():
