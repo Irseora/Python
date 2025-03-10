@@ -28,7 +28,7 @@ class MainWindow:
         self.InitMiddle()
         self.InitRight()
 
-        self.root.protocol("WM_DELETE_WINDOW", self.SaveAndClose)
+        self.root.protocol('WM_DELETE_WINDOW', self.SaveAndClose)
         self.root.mainloop()
 
     def LoadData(self):

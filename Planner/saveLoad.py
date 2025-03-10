@@ -3,13 +3,11 @@ import datetime as dt
 from containers import *
 
 def ReadJSON(path):
-    # TODO: docstring
     with open(path, 'r') as file:
         data = json.load(file)
     return data
 
 def LoadTasks(data):
-    # TODO: docstring
     tasks = []
     for task in data['tasks']:
         temp = Task(task['done'], task['text'])
@@ -17,7 +15,6 @@ def LoadTasks(data):
     return tasks
 
 def LoadEvents(data):
-    # TODO: docstring
     events = []
     for event in data['events']:
         date = dt.datetime.strptime(event['date'], '%d-%m-%Y').date()
@@ -33,7 +30,6 @@ def LoadEvents(data):
     return events
 
 def LoadDeadlines(data):
-    # TODO: docstring
     deadlines = []
     for deadline in data['deadlines']:
         date = dt.datetime.strptime(deadline['date'], '%d-%m-%Y').date()
